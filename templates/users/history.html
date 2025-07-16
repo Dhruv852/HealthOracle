@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Health History - HealthOracle{% endblock %}
+
+{% block extra_css %}
+<style>
+    .history-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 180, 216, 0.1);
+    }
+    
+    .history-table thead {
+        background-color: var(--accent-color);
+        color: white;
+    }
+    
+    .history-table th {
+        padding: 15px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+        border: none;
+    }
+    
+    .history-table tbody tr {
+        background-color: var(--card-bg);
+        transition: all 0.3s ease;
+    }
+    
+    .history-table tbody tr:hover {
+        background-color: var(--hover-color);
+        transform: translateX(5px);
+    }
+    
+    .history-table td {
+        padding: 12px 15px;
+        color: var(--text-primary);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .history-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .history-badge {
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    
+    .history-btn {
+        padding: 8px 20px;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .history-btn-view {
+        background-color: var(--accent-color);
+        color: white;
+    }
+    
+    .history-btn-view:hover {
+        background-color: var(--accent-hover);
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .history-btn-suggestions {
+        background-color: var(--secondary-color);
+        color: white;
+    }
+    
+    .history-btn-suggestions:hover {
+        background-color: var(--secondary-hover);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .no-history-message {
+        background-color: rgba(45, 45, 45, 0.8);
+        border-radius: 10px;
+        padding: 2rem;
+        text-align: center;
+        margin-top: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 180, 216, 0.1);
+    }
+
+    .no-history-message h3 {
+        color: var(--accent-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .no-history-message p {
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .no-history-message .btn {
+        padding: 10px 25px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+    }
+
+    .card-header {
+        background-color: var(--accent-color) !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: var(--accent-color); text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">Your Health History</h2>
+    
+    {% if prediction_history %}
+        <div class="table-responsive">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Test Type</th>
+                        <th>Date</th>
+                        <th>Risk Level</th>
+                        <th>Risk Percentage</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prediction in prediction_history %}
+                    <tr>
+                        <td>{{ prediction.get_test_type_display }}</td>
+                        <td>{{ prediction.date_created|date:"F d, Y, g:i a" }}</td>
+                        <td>
+                            <span class="history-badge {% if prediction.category == 'High Risk' %}bg-danger{% elif prediction.category == 'Moderate Risk' %}bg-warning{% else %}bg-success{% endif %}">
+                                {{ prediction.category }}
+                            </span>
+                        </td>
+                        <td>{{ prediction.risk_percentage }}%</td>
+                        <td>
+                            <a href="{% url 'prediction_detail' prediction.id %}" class="btn history-btn history-btn-view">View</a>
+                            <button onclick="setSelectedPrediction('{{ prediction.id }}'); window.location.href='/chatbot/{{ prediction.id }}/';" class="btn history-btn history-btn-suggestions">Chat</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="no-history-message">
+            <h3>No Prediction History Found</h3>
+            <p>You haven't made any health predictions yet. Try one of our prediction tools to get started.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'heart' %}" class="btn btn-primary">Heart Disease</a>
+                <a href="{% url 'diabetes' %}" class="btn btn-primary">Diabetes</a>
+                <a href="{% url 'lung' %}" class="btn btn-primary">Lung Disease</a>
+                <a href="{% url 'liver' %}" class="btn btn-primary">Liver Disease</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

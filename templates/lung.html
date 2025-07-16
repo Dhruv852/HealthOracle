@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Lung Disease Prediction - HealthOracle{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Lung Disease Prediction</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="age" name="age" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="smoking_status" class="form-label">Smoking Status</label>
+                                <select class="form-select" id="smoking_status" name="smoking_status" required>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="area_air_quality_index" class="form-label">Area Air Quality Index (0 to 500)</label>
+                                <input type="number" class="form-control" id="area_air_quality_index" name="area_air_quality_index" min="0" max="500" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="alcohol_consumption" class="form-label">Alcohol Consumption</label>
+                                <select class="form-select" id="alcohol_consumption" name="alcohol_consumption" required>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bmi" class="form-label">Body Mass Index (BMI)</label>
+                                <input type="number" class="form-control" id="bmi" name="bmi" step="0.1" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="family_history" class="form-label">Family History</label>
+                                <select class="form-select" id="family_history" name="family_history" required>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="physical_activity_level" class="form-label">Physical Activity Level (Days per Week)</label>
+                                <select class="form-select" id="physical_activity_level" name="physical_activity_level" required>
+                                    <option value="0">0 days</option>
+                                    <option value="1">1 day</option>
+                                    <option value="2">2 days</option>
+                                    <option value="3">3 days</option>
+                                    <option value="4">4 days</option>
+                                    <option value="5">5 days</option>
+                                    <option value="6">6 days</option>
+                                    <option value="7">7 days</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="occupation_exposure" class="form-label">Occupation Exposure</label>
+                                <select class="form-select" id="occupation_exposure" name="occupation_exposure" required>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary">Predict</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    {% if prediction_result is not None %}
+                    <div class="mt-4">
+                        <div class="alert {% if prediction_result == 1 %}alert-danger{% else %}alert-success{% endif %} text-center" role="alert">
+                            {% if prediction_result == 1 %}
+                                <h4 class="alert-heading">High Risk Detected</h4>
+                                <p>Based on the provided information, you may be at risk of lung disease. Please consult a healthcare professional for a thorough evaluation.</p>
+                            {% else %}
+                                <h4 class="alert-heading">Low Risk</h4>
+                                <p>Based on the provided information, you appear to have a low risk of lung disease. Continue maintaining a healthy lifestyle.</p>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="prediction-details">
+                            <h6>Prediction Details</h6>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <strong>Risk Percentage:</strong>
+                                    <span class="risk-percentage">{{ risk_percentage }}%</span>
+                                </li>
+                                <li>
+                                    <strong>Category:</strong>
+                                    <span class="category {% if prediction_result == 1 %}high-risk{% else %}low-risk{% endif %}">{{ category }}</span>
+                                </li>
+                                <li>
+                                    <strong>Advice:</strong>
+                                    <span class="advice">{{ advice }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

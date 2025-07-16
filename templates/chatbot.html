@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Health Oracle - Chat with AI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h4 class="mb-0">Chat with Health Oracle AI</h4>
+                    <p class="subtitle mb-0">Powered by Gemini 2.0 Flash</p>
+                    <button class="chat-close-btn" id="closeChat">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    {% if prediction %}
+                        <div class="message system-message">
+                            <h4>Analysis for {{ prediction.test_type|title }} Disease Risk</h4>
+                            <p>Test Date: {{ prediction.date_created|date:"F d, Y" }}</p>
+                            <p class="risk-level {% if prediction.risk_percentage > 60 %}high-risk{% elif prediction.risk_percentage >= 30 %}medium-risk{% else %}low-risk{% endif %}">
+                                Risk Level: {{ prediction.category }} ({{ prediction.risk_percentage }}%)
+                            </p>
+                        </div>
+                        
+                        <div class="message system-message">
+                            <p>I'm your AI health assistant powered by Gemini 2.0 Flash. I can help you understand your test results and provide personalized recommendations. Feel free to ask me any questions about your health condition.</p>
+                        </div>
+                    {% else %}
+                        <div class="message system-message">
+                            <h4>Welcome to HealthOracle Assistant</h4>
+                            <p>I'm your AI health assistant powered by Gemini 2.0 Flash. I can help you understand your health data and provide personalized recommendations. Feel free to ask me any questions about your health.</p>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="chat-input">
+                    <form id="chatForm" class="chat-form">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" id="userInput" class="form-control" 
+                                   placeholder="Ask a question about your health..." 
+                                   aria-label="Your message">
+                            <button type="submit" id="sendMessage" class="btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/chatbot_interaction.js' %}"></script>
+{% endblock %}

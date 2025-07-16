@@ -1,0 +1,123 @@
+{% extends 'HealthOracle/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="text-center mb-0">Liver Disease Prediction</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="age" name="age" required min="0" max="120">
+                                <div class="invalid-feedback">Please enter a valid age.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select class="form-select" id="gender" name="gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="1">Male</option>
+                                    <option value="0">Female</option>
+                                </select>
+                                <div class="invalid-feedback">Please select your gender.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="total_bilirubin" class="form-label">Total Bilirubin</label>
+                                <input type="number" step="0.1" class="form-control" id="total_bilirubin" name="total_bilirubin" required min="0">
+                                <div class="invalid-feedback">Please enter total bilirubin level.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="direct_bilirubin" class="form-label">Direct Bilirubin</label>
+                                <input type="number" step="0.1" class="form-control" id="direct_bilirubin" name="direct_bilirubin" required min="0">
+                                <div class="invalid-feedback">Please enter direct bilirubin level.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="alk_phos" class="form-label">Alkaline Phosphatase</label>
+                                <input type="number" class="form-control" id="alk_phos" name="alk_phos" required min="0">
+                                <div class="invalid-feedback">Please enter alkaline phosphatase level.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="alt" class="form-label">Alanine Aminotransferase (ALT)</label>
+                                <input type="number" class="form-control" id="alt" name="alt" required min="0">
+                                <div class="invalid-feedback">Please enter ALT level.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="ast" class="form-label">Aspartate Aminotransferase (AST)</label>
+                                <input type="number" class="form-control" id="ast" name="ast" required min="0">
+                                <div class="invalid-feedback">Please enter AST level.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="total_proteins" class="form-label">Total Proteins</label>
+                                <input type="number" step="0.1" class="form-control" id="total_proteins" name="total_proteins" required min="0">
+                                <div class="invalid-feedback">Please enter total proteins level.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="albumin" class="form-label">Albumin</label>
+                                <input type="number" step="0.1" class="form-control" id="albumin" name="albumin" required min="0">
+                                <div class="invalid-feedback">Please enter albumin level.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="ag_ratio" class="form-label">Albumin and Globulin Ratio</label>
+                                <input type="number" step="0.1" class="form-control" id="ag_ratio" name="ag_ratio" required min="0">
+                                <div class="invalid-feedback">Please enter albumin and globulin ratio.</div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Predict</button>
+                        </div>
+                    </form>
+
+                    {% if prediction %}
+                    <div class="mt-5">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <h4 class="text-center mb-0">Prediction Details</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h5 class="mb-3">Risk Percentage: <span class="fw-bold">{{ prediction.0 }}%</span></h5>
+                                    <h5 class="mb-3">Category: <span class="fw-bold">{{ prediction.1 }}</span></h5>
+                                    <p class="lead">{{ prediction.2 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Form validation
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+</script>
+{% endblock %} 

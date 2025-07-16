@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Profile - HealthOracle{% endblock %}
+
+{% block extra_css %}
+<style>
+    .profile-card {
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 180, 216, 0.1);
+    }
+
+    .profile-card .card-header {
+        background-color: var(--accent-color);
+        border-radius: 10px 10px 0 0;
+        padding: 1.5rem;
+    }
+
+    .profile-card .card-header h2 {
+        color: white;
+        margin: 0;
+        font-size: 1.8rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .profile-card .card-body {
+        padding: 2rem;
+    }
+
+    .form-label {
+        color: var(--text-primary);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+        padding: 0.75rem 1rem;
+    }
+
+    .form-control:focus {
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: var(--accent-color);
+        color: var(--text-primary);
+        box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.25);
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .text-danger {
+        color: #ff6b6b !important;
+    }
+
+    .alert {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: var(--text-primary);
+    }
+
+    .btn-primary {
+        background-color: var(--accent-color);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--accent-hover);
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card profile-card">
+                <div class="card-header text-center">
+                    <h2>Your Profile</h2>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="{{ u_form.username.id_for_label }}" class="form-label">Username</label>
+                                {{ u_form.username|add_class:"form-control" }}
+                                {% if u_form.username.errors %}
+                                    <div class="text-danger">
+                                        {% for error in u_form.username.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ u_form.email.id_for_label }}" class="form-label">Email</label>
+                                {{ u_form.email|add_class:"form-control" }}
+                                {% if u_form.email.errors %}
+                                    <div class="text-danger">
+                                        {% for error in u_form.email.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ u_form.first_name.id_for_label }}" class="form-label">First Name</label>
+                                {{ u_form.first_name|add_class:"form-control" }}
+                                {% if u_form.first_name.errors %}
+                                    <div class="text-danger">
+                                        {% for error in u_form.first_name.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ u_form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                                {{ u_form.last_name|add_class:"form-control" }}
+                                {% if u_form.last_name.errors %}
+                                    <div class="text-danger">
+                                        {% for error in u_form.last_name.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ p_form.date_of_birth.id_for_label }}" class="form-label">Date of Birth</label>
+                                {{ p_form.date_of_birth|add_class:"form-control" }}
+                                {% if p_form.date_of_birth.errors %}
+                                    <div class="text-danger">
+                                        {% for error in p_form.date_of_birth.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ p_form.phone_number.id_for_label }}" class="form-label">Phone Number</label>
+                                {{ p_form.phone_number|add_class:"form-control" }}
+                                {% if p_form.phone_number.errors %}
+                                    <div class="text-danger">
+                                        {% for error in p_form.phone_number.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                <label for="{{ p_form.address.id_for_label }}" class="form-label">Address</label>
+                                {{ p_form.address|add_class:"form-control" }}
+                                {% if p_form.address.errors %}
+                                    <div class="text-danger">
+                                        {% for error in p_form.address.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
