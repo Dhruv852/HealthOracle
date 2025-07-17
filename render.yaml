@@ -6,6 +6,6 @@ services:
     startCommand: gunicorn HealthOracle.wsgi
     envVars:
       - key: DJANGO_SECRET_KEY
-        value: your-secret-key
+        value: django-insecure-t!-y&-7$irvlvl8_cza6c9soy(^8ptr+sm1(!7@2s0br^h56w2
       - key: GEMINI_API_KEY
-        value: your-gemini-api-key 
+        value: AIzaSyBhOzZgzBVBRufTJySxC6zhuFnum8RFgu0
