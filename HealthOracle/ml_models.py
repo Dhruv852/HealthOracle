@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout
@@ -8,10 +7,8 @@ from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split, KFold, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, classification_report
-from imblearn.over_sampling import SMOTE
 import joblib
-import matplotlib.pyplot as plt
-import seaborn as sns
+# Removed: import pandas as pd, import matplotlib.pyplot as plt, import seaborn as sns, from imblearn.over_sampling import SMOTE
 
 def build_model(input_dim):
     model = Sequential()
@@ -214,41 +211,32 @@ def train_lung_model():
 
 # Load models and scalers at module level
 try:
-    # Try to load existing models first
     heart_model = load_model('heart_model.h5')
     heart_scaler = joblib.load('heart_scaler.pkl')
     print("Successfully loaded heart model")
-except:
-    print("Training heart model...")
-    heart_model = train_heart_model()
-    heart_scaler = joblib.load('heart_scaler.pkl')
+except Exception as e:
+    raise RuntimeError("Pretrained heart model files are missing. Please upload them.") from e
 
 try:
     liver_model = load_model('liver_model.h5')
     liver_scaler = joblib.load('liver_scaler.pkl')
     print("Successfully loaded liver model")
-except:
-    print("Training liver model...")
-    liver_model = train_liver_model()
-    liver_scaler = joblib.load('liver_scaler.pkl')
+except Exception as e:
+    raise RuntimeError("Pretrained liver model files are missing. Please upload them.") from e
 
 try:
     diabetes_model = load_model('diabetes_model.h5')
     diabetes_scaler = joblib.load('diabetes_scaler.pkl')
     print("Successfully loaded diabetes model")
-except:
-    print("Training diabetes model...")
-    diabetes_model = train_diabetes_model()
-    diabetes_scaler = joblib.load('diabetes_scaler.pkl')
+except Exception as e:
+    raise RuntimeError("Pretrained diabetes model files are missing. Please upload them.") from e
 
 try:
     lung_model = load_model('lung_model.h5')
     lung_scaler = joblib.load('lung_scaler.pkl')
     print("Successfully loaded lung model")
-except:
-    print("Training lung model...")
-    lung_model = train_lung_model()
-    lung_scaler = joblib.load('lung_scaler.pkl')
+except Exception as e:
+    raise RuntimeError("Pretrained lung model files are missing. Please upload them.") from e
 
 def calibrate_prediction(raw_prediction):
     if raw_prediction > 0.8:
