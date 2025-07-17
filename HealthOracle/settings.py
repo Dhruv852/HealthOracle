@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t!-y&-7$irvlvl8_cza6c9soy(^8ptr+sm1(!7@2s0br^h56w2'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-t!-y&-7$irvlvl8_cza6c9soy(^8ptr+sm1(!7@2s0br^h56w2')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -89,7 +90,7 @@ DATABASES = {
 
 
 # Gemini API Configuration
-GEMINI_API_KEY = 'AIzaSyBhOzZgzBVBRufTJySxC6zhuFnum8RFgu0'
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'AIzaSyBhOzZgzBVBRufTJySxC6zhuFnum8RFgu0')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
