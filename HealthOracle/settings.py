@@ -27,8 +27,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-t!-y&-7$irvlvl
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'healthoracle-production.up.railway.app',  # your Railway domain
-    '.railway.app',                            # allow all Railway subdomains
+    'healthoracle-production.up.railway.app', 
+    'healthoracle-d1hx.onrender.com',
+    '.railway.app',                           
     'localhost',
     '127.0.0.1'
 ]
