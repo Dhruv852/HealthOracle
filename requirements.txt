@@ -10,4 +10,4 @@ pillow>=10.2.0
 tensorflow
 whitenoise
 gunicorn
-google-generativeai 
+google-genai

@@ -3,15 +3,16 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import PredictionHistory
 from .chatbot_models import ChatbotSuggestion
-import google.generativeai as genai
+import google.genai as genai
+from google.genai import types
 import json
 from django.conf import settings
 
 # Configure Gemini API
 def configure_gemini():
     try:
-        genai.configure(api_key=settings.GEMINI_API_KEY)
-        return genai.GenerativeModel('gemini-2.0-flash')
+        client = genai.Client(api_key=settings.GEMINI_API_KEY)
+        return client
     except Exception as e:
         print(f"Error configuring Gemini: {str(e)}")
         return None
@@ -80,11 +81,14 @@ def get_suggestions(request, prediction_id):
             
             try:
                 # Initialize Gemini
-                model = configure_gemini()
-                if not model:
-                    raise Exception("Failed to initialize Gemini model")
+                client = configure_gemini()
+                if not client:
+                    raise Exception("Failed to initialize Gemini client")
                 
-                response = model.generate_content(prompt)
+                response = client.models.generate_content(
+                    model='models/gemini-2.5-flash',
+                    contents=prompt
+                )
                 
                 if not response or not response.text:
                     raise Exception("Empty response from Gemini API")
@@ -133,9 +137,9 @@ def handle_chatbot_query(request, prediction_id=None):
                 })
             
             # Initialize Gemini
-            model = configure_gemini()
-            if not model:
-                raise Exception("Failed to initialize Gemini model")
+            client = configure_gemini()
+            if not client:
+                raise Exception("Failed to initialize Gemini client")
 
             if prediction_id:
                 # Prediction-specific chat mode
@@ -168,7 +172,7 @@ def handle_chatbot_query(request, prediction_id=None):
             else:
                 # General healthcare chat mode
                 context = f"""
-                You are a knowledgeable and empathetic healthcare AI assistant using the Gemini 2.0 Flash model. 
+                You are a knowledgeable and empathetic healthcare AI assistant. 
                 Your role is to provide helpful, evidence-based health information and guidance while maintaining 
                 appropriate medical disclaimers. 
 
@@ -198,7 +202,10 @@ def handle_chatbot_query(request, prediction_id=None):
                 """
             
             try:
-                response = model.generate_content(context)
+                response = client.models.generate_content(
+                    model='models/gemini-2.5-flash',
+                    contents=context
+                )
                 
                 if not response or not response.text:
                     raise Exception("Empty response from Gemini API")

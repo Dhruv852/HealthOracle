@@ -6,12 +6,11 @@ from .models import PredictionHistory
 import numpy as np
 import json
 from django.http import JsonResponse
-import google.generativeai as genai
+import google.genai as genai
 from django.conf import settings
 
 # Configure Gemini API
-genai.configure(api_key=settings.GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-2.0-flash')
+client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 def home(request):
     return render(request, 'home.html')
@@ -588,7 +587,10 @@ def handle_chatbot_query(request, prediction_id):
             
             try:
                 # Get response from Gemini
-                response = model.generate_content(context)
+                response = client.models.generate_content(
+                    model='models/gemini-2.5-flash',
+                    contents=context
+                )
                 
                 if not response or not response.text:
                     raise Exception("Empty response from Gemini API")

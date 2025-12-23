@@ -96,7 +96,7 @@ DATABASES = {
 
 
 # Gemini API Configuration
-GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'AIzaSyBg0erT664pZ_fQCcGQhqzsmRbnR-gfPDQ')
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'AIzaSyDfxavES3Y6dBLRU5v95WXGYXkUGopXO38')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
