@@ -209,34 +209,63 @@ def train_lung_model():
         print(f"Error training lung model: {str(e)}")
         raise ValueError("Error training lung disease model. Please check the training data.")
 
-# Load models and scalers at module level
-try:
-    heart_model = load_model('heart_model.h5')
-    heart_scaler = joblib.load('heart_scaler.pkl')
-    print("Successfully loaded heart model")
-except Exception as e:
-    raise RuntimeError("Pretrained heart model files are missing. Please upload them.") from e
+# Initialize model variables as None (lazy loading)
+heart_model = None
+heart_scaler = None
+liver_model = None
+liver_scaler = None
+diabetes_model = None
+diabetes_scaler = None
+lung_model = None
+lung_scaler = None
 
-try:
-    liver_model = load_model('liver_model.h5')
-    liver_scaler = joblib.load('liver_scaler.pkl')
-    print("Successfully loaded liver model")
-except Exception as e:
-    raise RuntimeError("Pretrained liver model files are missing. Please upload them.") from e
+def load_heart_model():
+    """Lazy load heart disease model"""
+    global heart_model, heart_scaler
+    if heart_model is None or heart_scaler is None:
+        try:
+            heart_model = load_model('heart_model.h5', compile=False)
+            heart_scaler = joblib.load('heart_scaler.pkl')
+            print("Successfully loaded heart model")
+        except Exception as e:
+            raise RuntimeError("Pretrained heart model files are missing. Please upload them.") from e
+    return heart_model, heart_scaler
 
-try:
-    diabetes_model = load_model('diabetes_model.h5')
-    diabetes_scaler = joblib.load('diabetes_scaler.pkl')
-    print("Successfully loaded diabetes model")
-except Exception as e:
-    raise RuntimeError("Pretrained diabetes model files are missing. Please upload them.") from e
+def load_liver_model():
+    """Lazy load liver disease model"""
+    global liver_model, liver_scaler
+    if liver_model is None or liver_scaler is None:
+        try:
+            liver_model = load_model('liver_model.h5', compile=False)
+            liver_scaler = joblib.load('liver_scaler.pkl')
+            print("Successfully loaded liver model")
+        except Exception as e:
+            raise RuntimeError("Pretrained liver model files are missing. Please upload them.") from e
+    return liver_model, liver_scaler
 
-try:
-    lung_model = load_model('lung_model.h5')
-    lung_scaler = joblib.load('lung_scaler.pkl')
-    print("Successfully loaded lung model")
-except Exception as e:
-    raise RuntimeError("Pretrained lung model files are missing. Please upload them.") from e
+def load_diabetes_model():
+    """Lazy load diabetes model"""
+    global diabetes_model, diabetes_scaler
+    if diabetes_model is None or diabetes_scaler is None:
+        try:
+            diabetes_model = load_model('diabetes_model.h5', compile=False)
+            diabetes_scaler = joblib.load('diabetes_scaler.pkl')
+            print("Successfully loaded diabetes model")
+        except Exception as e:
+            raise RuntimeError("Pretrained diabetes model files are missing. Please upload them.") from e
+    return diabetes_model, diabetes_scaler
+
+def load_lung_model():
+    """Lazy load lung disease model"""
+    global lung_model, lung_scaler
+    if lung_model is None or lung_scaler is None:
+        try:
+            lung_model = load_model('lung_model.h5', compile=False)
+            lung_scaler = joblib.load('lung_scaler.pkl')
+            print("Successfully loaded lung model")
+        except Exception as e:
+            raise RuntimeError("Pretrained lung model files are missing. Please upload them.") from e
+    return lung_model, lung_scaler
 
 def calibrate_prediction(raw_prediction):
     if raw_prediction > 0.8:
@@ -250,17 +279,8 @@ def calibrate_prediction(raw_prediction):
         return raw_prediction
 
 def predict_lung_disease(features):
-    global lung_model, lung_scaler
-    
-    # Ensure model and scaler are loaded
-    if lung_model is None or lung_scaler is None:
-        try:
-            lung_model = load_model('lung_model.h5')
-            lung_scaler = joblib.load('lung_scaler.pkl')
-        except Exception as e:
-            print(f"Error loading lung model: {str(e)}")
-            lung_model = train_lung_model()
-            lung_scaler = joblib.load('lung_scaler.pkl')
+    # Lazy load the model
+    lung_model, lung_scaler = load_lung_model()
     
     try:
         # Convert input features to appropriate types
@@ -372,6 +392,9 @@ def train_diabetes_model():
 
 # Prediction Functions with calibration
 def predict_heart_disease(features):
+    # Lazy load the model
+    heart_model, heart_scaler = load_heart_model()
+    
     try:
         feature_names = joblib.load('heart_model_features.pkl')
         
@@ -403,6 +426,9 @@ def predict_heart_disease(features):
     return risk_percentage, category, advice
 
 def predict_liver_disease(features):
+    # Lazy load the model
+    liver_model, liver_scaler = load_liver_model()
+    
     try:
         feature_names = joblib.load('liver_model_features.pkl')
         
@@ -434,6 +460,9 @@ def predict_liver_disease(features):
     return risk_percentage, category, advice
 
 def predict_diabetes(features):
+    # Lazy load the model
+    diabetes_model, diabetes_scaler = load_diabetes_model()
+    
     try:
         feature_names = joblib.load('diabetes_model_features.pkl')
         
