@@ -209,7 +209,7 @@ def train_lung_model():
         print(f"Error training lung model: {str(e)}")
         raise ValueError("Error training lung disease model. Please check the training data.")
 
-# Initialize model variables as None (lazy loading)
+# Global variables for lazy loading models
 heart_model = None
 heart_scaler = None
 liver_model = None
@@ -279,8 +279,8 @@ def calibrate_prediction(raw_prediction):
         return raw_prediction
 
 def predict_lung_disease(features):
-    # Lazy load the model
-    lung_model, lung_scaler = load_lung_model()
+    # Lazy load model and scaler
+    model, scaler = load_lung_model()
     
     try:
         # Convert input features to appropriate types
@@ -310,10 +310,10 @@ def predict_lung_disease(features):
         ]])
         
         # Scale features
-        scaled_features = lung_scaler.transform(features_array)
+        scaled_features = scaler.transform(features_array)
         
         # Make prediction
-        prediction = lung_model.predict(scaled_features)
+        prediction = model.predict(scaled_features)
         raw_prediction = float(prediction[0][0])
         calibrated_prediction = calibrate_prediction(raw_prediction)
         
@@ -392,8 +392,8 @@ def train_diabetes_model():
 
 # Prediction Functions with calibration
 def predict_heart_disease(features):
-    # Lazy load the model
-    heart_model, heart_scaler = load_heart_model()
+    # Lazy load model and scaler
+    model, scaler = load_heart_model()
     
     try:
         feature_names = joblib.load('heart_model_features.pkl')
@@ -413,8 +413,8 @@ def predict_heart_disease(features):
     except:
         pass
     
-    scaled_features = heart_scaler.transform([features])
-    prediction = heart_model.predict(scaled_features)
+    scaled_features = scaler.transform([features])
+    prediction = model.predict(scaled_features)
     
     raw_prediction = float(prediction[0][0])
     calibrated_prediction = calibrate_prediction(raw_prediction)
@@ -426,8 +426,8 @@ def predict_heart_disease(features):
     return risk_percentage, category, advice
 
 def predict_liver_disease(features):
-    # Lazy load the model
-    liver_model, liver_scaler = load_liver_model()
+    # Lazy load model and scaler
+    model, scaler = load_liver_model()
     
     try:
         feature_names = joblib.load('liver_model_features.pkl')
@@ -447,8 +447,8 @@ def predict_liver_disease(features):
     except:
         pass
     
-    scaled_features = liver_scaler.transform([features])
-    prediction = liver_model.predict(scaled_features)
+    scaled_features = scaler.transform([features])
+    prediction = model.predict(scaled_features)
     
     raw_prediction = float(prediction[0][0])
     calibrated_prediction = calibrate_prediction(raw_prediction)
@@ -460,8 +460,8 @@ def predict_liver_disease(features):
     return risk_percentage, category, advice
 
 def predict_diabetes(features):
-    # Lazy load the model
-    diabetes_model, diabetes_scaler = load_diabetes_model()
+    # Lazy load model and scaler
+    model, scaler = load_diabetes_model()
     
     try:
         feature_names = joblib.load('diabetes_model_features.pkl')
@@ -481,8 +481,8 @@ def predict_diabetes(features):
     except:
         pass
     
-    scaled_features = diabetes_scaler.transform([features])
-    prediction = diabetes_model.predict(scaled_features)
+    scaled_features = scaler.transform([features])
+    prediction = model.predict(scaled_features)
     
     raw_prediction = float(prediction[0][0])
     calibrated_prediction = calibrate_prediction(raw_prediction)

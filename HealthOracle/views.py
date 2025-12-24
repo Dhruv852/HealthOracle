@@ -15,7 +15,9 @@ _gemini_client = None
 def get_gemini_client():
     """Lazy load Gemini API client"""
     global _gemini_client
-    if _gemini_client is None and settings.GEMINI_API_KEY:
+    if _gemini_client is None:
+        if not settings.GEMINI_API_KEY:
+            raise ValueError("GEMINI_API_KEY is not set in environment variables")
         _gemini_client = genai.Client(api_key=settings.GEMINI_API_KEY)
     return _gemini_client
 
@@ -595,8 +597,6 @@ def handle_chatbot_query(request, prediction_id):
             try:
                 # Get Gemini client (lazy loaded)
                 client = get_gemini_client()
-                if not client:
-                    raise Exception("Gemini API key not configured")
                 
                 # Get response from Gemini
                 response = client.models.generate_content(
