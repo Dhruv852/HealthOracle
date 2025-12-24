@@ -12,6 +12,8 @@ services:
       sizeGB: 1
     
     envVars:
+      - key: RENDER
+        value: "true"  # Indicates we're on Render
       - key: DJANGO_SECRET_KEY
         sync: false  # Set this in Render dashboard
       - key: GEMINI_API_KEY
