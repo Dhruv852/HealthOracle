@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
             --card-bg: #333333;
             --hover-color: #404040;
         }
+
         body {
             background-color: var(--primary-bg);
             color: var(--text-primary);
@@ -50,19 +52,22 @@
             pointer-events: none;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             background-color: var(--secondary-bg);
             border: 1px solid var(--hover-color);
             transition: all 0.3s ease;
             color: var(--text-primary);
         }
 
-        .form-control:hover, .form-select:hover {
+        .form-control:hover,
+        .form-select:hover {
             border-color: var(--accent-color);
             box-shadow: 0 0 10px rgba(0, 180, 216, 0.1);
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             background-color: var(--secondary-bg);
             border-color: var(--accent-color);
             box-shadow: 0 0 15px rgba(0, 180, 216, 0.2);
@@ -80,21 +85,25 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3);
         }
+
         .navbar {
             background-color: rgba(45, 45, 45, 0.95) !important;
-            
+
         }
+
         .navbar-brand {
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--accent-color) !important;
             transition: all 0.3s ease;
-            
+
         }
+
         .navbar-brand:hover {
             transform: scale(1.05);
-            
+
         }
+
         .nav-link {
             color: var(--text-primary) !important;
             transition: all 0.3s ease;
@@ -102,6 +111,7 @@
             padding: 0.5rem 1rem;
             margin: 0 0.2rem;
         }
+
         .nav-link:after {
             content: '';
             position: absolute;
@@ -113,9 +123,11 @@
             transition: width 0.3s ease;
             box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
         }
+
         .nav-link:hover:after {
             width: 100%;
         }
+
         .hero-section {
             background-color: rgba(45, 45, 45, 0.7);
             padding: 6rem 0;
@@ -124,6 +136,7 @@
             overflow: hidden;
             backdrop-filter: blur(5px);
         }
+
         .hero-section:before {
             content: '';
             position: absolute;
@@ -131,9 +144,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, rgba(0,180,216,0.2) 0%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(45deg, rgba(0, 180, 216, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
             pointer-events: none;
         }
+
         .prediction-card {
             background-color: rgba(57, 56, 56, 0.9);
             border: none;
@@ -145,6 +159,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .prediction-card:before {
             content: '';
             position: absolute;
@@ -152,32 +167,38 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(0,180,216,0.1) 0%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(135deg, rgba(0, 180, 216, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
+
         .prediction-card:hover {
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 8px 35px rgba(0, 180, 216, 0.3);
         }
+
         .prediction-card:hover:before {
             opacity: 1;
         }
+
         .card {
             background-color: rgba(51, 51, 51, 0.9);
             border: none;
             border-radius: 15px;
-            
+
         }
+
         .prediction-card .card-text {
             color: var(--text-primary);
             opacity: 0.9;
         }
+
         .prediction-card .card-title {
             color: var(--text-primary);
             font-weight: 600;
             margin-bottom: 1rem;
         }
+
         .btn-primary {
             background-color: var(--accent-color);
             border: none;
@@ -188,6 +209,7 @@
             overflow: hidden;
             z-index: 1;
         }
+
         .btn-primary:before {
             content: '';
             position: absolute;
@@ -195,36 +217,45 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.7s ease;
             z-index: -1;
         }
+
         .btn-primary:hover {
             background-color: #0096b4;
             transform: translateY(-2px);
-            
+
         }
+
         .btn-primary:hover:before {
             left: 100%;
         }
+
         .form-label {
             color: var(--text-primary);
             font-weight: 500;
             margin-bottom: 0.5rem;
         }
-        .form-control, .form-select {
+
+        .form-control,
+        .form-select {
             background-color: var(--secondary-bg);
             border: 1px solid var(--hover-color);
             color: var(--text-primary);
             transition: all 0.3s ease;
         }
-        .form-control:focus, .form-select:focus {
+
+        .form-control:focus,
+        .form-select:focus {
             background-color: var(--secondary-bg);
             border-color: var(--accent-color);
             box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.25);
             color: var(--text-primary);
         }
-        .form-control:hover, .form-select:hover {
+
+        .form-control:hover,
+        .form-select:hover {
             border-color: var(--accent-color);
             box-shadow: 0 0 10px rgba(0, 180, 216, 0.1);
         }
@@ -266,23 +297,31 @@
             width: 100%;
             left: 0;
         }
-        
+
         .dropdown-item:hover {
             background-color: var(--hover-color);
             color: var(--accent-color) !important;
             transform: translateX(5px);
         }
-        
+
         .dropdown-menu {
             padding: 0.5rem 0;
             margin-top: 0.5rem;
             animation: fadeIn 0.3s ease-in-out;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .footer {
             background-color: rgba(45, 45, 45, 0.95);
             color: var(--text-secondary);
@@ -291,19 +330,23 @@
             border-top: 1px solid var(--hover-color);
             backdrop-filter: blur(10px);
         }
+
         .animate-fade-up {
             animation: fadeInUp 0.6s ease-out;
         }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         .card-text {
             color: #e0e0e0;
             line-height: 1.6;
@@ -378,15 +421,24 @@
         .prediction-details .category.low-risk {
             color: #4ecdc4;
         }
+
+        /* Password help text styling */
+        .form-text {
+            color: #ffffff !important;
+            opacity: 0.9;
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
+
 <body>
-    <div id="particles-js" style="position: fixed; width: 100%; height: 100vh; top: 0; left: 0; z-index: 0; pointer-events: none;"></div>
+    <div id="particles-js"
+        style="position: fixed; width: 100%; height: 100vh; top: 0; left: 0; z-index: 0; pointer-events: none;"></div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/">HealthOracle</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border-color: var(--accent-color);">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                style="border-color: var(--accent-color);">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -412,31 +464,41 @@
                         <a class="nav-link" href="/about">About</a>
                     </li>
                     {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user-circle me-1"></i> {{ user.username }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="background-color: var(--secondary-bg); border: 1px solid var(--hover-color); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);">
-                                <li><a class="dropdown-item" href="{% url 'profile' %}" style="color: var(--text-primary); transition: all 0.3s ease;"><i class="fas fa-id-card me-2"></i>Profile</a></li>
-                                <li><a class="dropdown-item" href="{% url 'history' %}" style="color: var(--text-primary); transition: all 0.3s ease;"><i class="fas fa-history me-2"></i>History</a></li>
-                                <li><hr class="dropdown-divider" style="border-color: var(--hover-color);"></li>
-                                <li>
-                                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                                        {% csrf_token %}
-                                        <button type="submit" class="dropdown-item" style="color: var(--text-primary); transition: all 0.3s ease; background: none; border: none; width: 100%; text-align: left;">
-                                            <i class="fas fa-sign-out-alt me-2"></i>Logout
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle me-1"></i> {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"
+                            style="background-color: var(--secondary-bg); border: 1px solid var(--hover-color); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}"
+                                    style="color: var(--text-primary); transition: all 0.3s ease;"><i
+                                        class="fas fa-id-card me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'history' %}"
+                                    style="color: var(--text-primary); transition: all 0.3s ease;"><i
+                                        class="fas fa-history me-2"></i>History</a></li>
+                            <li>
+                                <hr class="dropdown-divider" style="border-color: var(--hover-color);">
+                            </li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item"
+                                        style="color: var(--text-primary); transition: all 0.3s ease; background: none; border: none; width: 100%; text-align: left;">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus me-1"></i> Register</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus me-1"></i>
+                            Register</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
@@ -454,7 +516,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/chatbot.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             particlesJS('particles-js', {
                 particles: {
                     number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -483,4 +545,5 @@
     </script>
     {% block extra_js %}{% endblock %}
 </body>
+
 </html>
