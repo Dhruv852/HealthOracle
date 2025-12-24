@@ -24,8 +24,11 @@ COPY . /app/
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
+# Make start script executable
+RUN chmod +x /app/start.sh
+
 # Expose port (for local testing, most PaaS set $PORT)
 EXPOSE 8000
 
-# Start server
-CMD gunicorn HealthOracle.wsgi:application --bind 0.0.0.0:${PORT:-8000}  
+# Start server using startup script (runs migrations first)
+CMD ["/app/start.sh"]  
