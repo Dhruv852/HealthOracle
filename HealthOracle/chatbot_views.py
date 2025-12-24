@@ -3,14 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import PredictionHistory
 from .chatbot_models import ChatbotSuggestion
-import google.genai as genai
-from google.genai import types
 import json
 from django.conf import settings
 
-# Configure Gemini API
+# Configure Gemini API - lazy load to avoid slow startup
 def configure_gemini():
     try:
+        # Import here to avoid slow Django startup
+        import google.genai as genai
         client = genai.Client(api_key=settings.GEMINI_API_KEY)
         return client
     except Exception as e:

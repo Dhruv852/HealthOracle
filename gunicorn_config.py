@@ -10,7 +10,7 @@ backlog = 2048
 workers = 1  # Use only 1 worker on free tier to save memory
 worker_class = 'sync'
 worker_connections = 1000
-timeout = 120  # Increased timeout for model loading
+timeout = 300  # Increased timeout for slow google.genai import (happens once)
 keepalive = 5
 
 # Restart workers after this many requests to prevent memory leaks
