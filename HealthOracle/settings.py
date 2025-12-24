@@ -91,10 +91,21 @@ WSGI_APPLICATION = 'HealthOracle.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# Use persistent disk on Render, local file otherwise
+if os.environ.get('RENDER'):
+    # On Render, use persistent disk mounted at /data
+    from pathlib import Path as PathLib
+    DB_DIR = PathLib('/data')
+    DB_DIR.mkdir(exist_ok=True)  # Ensure directory exists
+    DB_PATH = DB_DIR / 'db.sqlite3'
+else:
+    # Local development
+    DB_PATH = BASE_DIR / 'db.sqlite3'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DB_PATH,
     }
 }
 
