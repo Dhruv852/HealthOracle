@@ -11,3 +11,4 @@ tensorflow
 whitenoise
 gunicorn
 google-genai
+python-dotenv

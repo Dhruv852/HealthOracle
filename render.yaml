@@ -6,6 +6,6 @@ services:
     startCommand: gunicorn HealthOracle.wsgi
     envVars:
       - key: DJANGO_SECRET_KEY
-        value: django-insecure-t!-y&-7$irvlvl8_cza6c9soy(^8ptr+sm1(!7@2s0br^h56w2
+        sync: false  # Set this in Render dashboard
       - key: GEMINI_API_KEY
-        value: AIzaSyDfxavES3Y6dBLRU5v95WXGYXkUGopXO38
+        sync: false  # Set this in Render dashboard
